@@ -3,7 +3,8 @@ package filesys
 import (
 	"io/ioutil"
 	"path/filepath"
-	"xqpack/tuple"
+
+	"github.com/guodf/goutil/tuple"
 )
 
 type FileType int
