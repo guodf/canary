@@ -1,6 +1,7 @@
 package filesys
 
 import "os"
+import "log"
 
 // Exists 判断路径是否存在，忽略权限
 func Exists(path string) bool {
@@ -12,6 +13,7 @@ func Exists(path string) bool {
 func IsDir(path string) bool {
 	fileInfo, e := os.Stat(path)
 	if e != nil {
+		log.Println(e)
 		return false
 	}
 	return fileInfo.IsDir()

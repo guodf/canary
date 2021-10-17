@@ -1,7 +1,7 @@
 # go工具包
 
 1. hashs
-2. datatiem
+2. datatime
 3. filesys
 4. uriparse
 5. store_unit

@@ -2,16 +2,14 @@ package store_unit
 
 import "fmt"
 
-var (
-	KB = 1024
-	MB = KB * 1024
-	GB = MB * 1024
-)
+var KB uint64 = 1024
+var MB uint64 = KB * 1024
+var GB uint64 = MB * 1024
 
-func SizeString(size int) string {
+func SizeString(size uint64) string {
 	if size > GB {
-		left := size / GB
-		right := size % GB
+		var left uint64 = size / GB
+		var right uint64 = size % GB
 		return toString(left, right, "GB")
 	} else if size > MB {
 		left := size / MB
@@ -22,7 +20,7 @@ func SizeString(size int) string {
 
 }
 
-func toString(left int, right int, store string) string {
+func toString(left uint64, right uint64, store string) string {
 	if right == 0 {
 		return fmt.Sprintf("%d %s", left, store)
 	}
