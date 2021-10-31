@@ -1,7 +1,9 @@
 package filesys
 
-import "os"
-import "log"
+import (
+	"log"
+	"os"
+)
 
 // Exists 判断路径是否存在，忽略权限
 func Exists(path string) bool {

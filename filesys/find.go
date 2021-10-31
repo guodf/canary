@@ -1,7 +1,9 @@
 package filesys
 
-import "path/filepath"
-import "github.com/guodf/goutil/tuple"
+import (
+	"io/fs"
+	"path/filepath"
+)
 
 // FindFilesInExt 根据扩展名查找文件
 func FindFilesInExt(dirPath string, exts []string, maxDepth int) []string {
@@ -9,19 +11,16 @@ func FindFilesInExt(dirPath string, exts []string, maxDepth int) []string {
 	if !IsDir(dirPath) {
 		return files
 	}
-	tupleChan:=make(chan *tuple.Tuple2)
-	go ScanByBreadth(dirPath, maxDepth,tupleChan)
-	for tuple2 := range tupleChan {
-		fileType := tuple2.Item1.(FileType)
-		filePath := tuple2.Item2.(string)
-		if fileType == File {
+	ScanByBreadth(dirPath, maxDepth, func(fullPath string, fsInfo fs.FileInfo) bool {
+		if !fsInfo.IsDir() {
 			for _, ext := range exts {
-				if ext == filepath.Ext(filePath) {
-					files = append(files, filePath)
+				if ext == filepath.Ext(fullPath) {
+					files = append(files, fullPath)
 				}
 			}
 		}
-	}
+		return true
+	})
 
 	return files
 }
