@@ -1,4 +1,4 @@
-module goutil
+module e.coding.net/guodf/gopkg/goutil
 
 go 1.13
 
