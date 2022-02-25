@@ -1,4 +1,4 @@
-module github.com/guodf/goutil
+module goutil
 
 go 1.13
 
