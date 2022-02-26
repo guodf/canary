@@ -43,7 +43,7 @@ func FailedResult(code ErrorCode) *ResultDto {
 }
 
 // OkResult 返回成功数据
-func OkResult(c *gin.Context, data interface{}) {
+func Ok(c *gin.Context, data interface{}) {
 	c.JSON(http.StatusOK, ResultDto{
 		Code: Success,
 		Msg:  errorsMap[Success],
@@ -52,7 +52,7 @@ func OkResult(c *gin.Context, data interface{}) {
 }
 
 // OkPagedResult 返回翻页数据
-func OkPagedResult(c *gin.Context, data interface{}, total int64) {
+func OkPaged(c *gin.Context, data interface{}, total int64) {
 	c.JSON(http.StatusOK, ResultDto{
 		Code:  Success,
 		Msg:   errorsMap[Success],
