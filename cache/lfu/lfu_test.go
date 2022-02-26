@@ -1,9 +1,10 @@
 package lfu
 
 import (
-	"github.com/guodf/goutil/cache"
 	"reflect"
 	"testing"
+
+	"e.coding.net/guodf/gopkg/goutil/cache"
 )
 
 func Test_newLfuCache(t *testing.T) {

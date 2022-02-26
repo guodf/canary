@@ -7,7 +7,7 @@ import (
 	"log"
 	"path/filepath"
 
-	"github.com/guodf/goutil/tuple"
+	"e.coding.net/guodf/gopkg/goutil/tuple"
 )
 
 type FileType int

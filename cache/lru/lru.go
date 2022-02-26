@@ -1,6 +1,6 @@
 package lru
 
-import "github.com/guodf/goutil/cache"
+import "e.coding.net/guodf/gopkg/goutil/cache"
 
 type lruCache struct {
 	name  string

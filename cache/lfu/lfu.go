@@ -1,9 +1,10 @@
 package lfu
 
 import (
-	"github.com/guodf/goutil/cache"
 	"sync"
 	"sync/atomic"
+
+	"e.coding.net/guodf/gopkg/goutil/cache"
 )
 
 type lfuCache struct {

@@ -1,8 +1,9 @@
 package fifo
 
 import (
-	"github.com/guodf/goutil/cache"
 	"sync"
+
+	"e.coding.net/guodf/gopkg/goutil/cache"
 )
 
 type fifoCache struct {
