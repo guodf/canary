@@ -11,7 +11,7 @@ import (
 func Recovery() gin.RecoveryFunc {
 	return func(c *gin.Context, err interface{}) {
 		if code, ok := err.(int); ok {
-			c.AbortWithStatusJSON(http.StatusOK, dtos.FailedResult(dtos.ErrorCode(code)))
+			dtos.FailedResult(c, dtos.ErrorCode(code))
 		} else {
 			c.AbortWithStatus(http.StatusInternalServerError)
 		}

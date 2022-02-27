@@ -35,7 +35,7 @@ func RegisterCode(errMap map[ErrorCode]string) {
 }
 
 // FailedResult 返回值
-func FailedResult(code ErrorCode) *ResultDto {
+func FailedResult(c *gin.Context, code ErrorCode) *ResultDto {
 	return &ResultDto{
 		Code: code,
 		Msg:  errorsMap[code],
