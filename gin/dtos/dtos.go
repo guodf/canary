@@ -35,11 +35,16 @@ func RegisterCode(errMap map[ErrorCode]string) {
 }
 
 // FailedResult 返回值
-func FailedResult(c *gin.Context, code ErrorCode) *ResultDto {
-	return &ResultDto{
+func FailedResult(c *gin.Context, code ErrorCode) {
+	FailedResultWithMsg(c, code, errorsMap[code])
+}
+
+// FailedResultWithMsg
+func FailedResultWithMsg(c *gin.Context, code ErrorCode, msg string) {
+	c.JSON(http.StatusOK, &ResultDto{
 		Code: code,
-		Msg:  errorsMap[code],
-	}
+		Msg:  msg,
+	})
 }
 
 // OkResult 返回成功数据
