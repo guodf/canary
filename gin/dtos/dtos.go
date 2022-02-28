@@ -41,7 +41,7 @@ func FailedResult(c *gin.Context, code ErrorCode) {
 
 // FailedResultWithMsg
 func FailedResultWithMsg(c *gin.Context, code ErrorCode, msg string) {
-	c.JSON(http.StatusOK, &ResultDto{
+	c.AbortWithStatusJSON(http.StatusOK, &ResultDto{
 		Code: code,
 		Msg:  msg,
 	})
@@ -49,7 +49,7 @@ func FailedResultWithMsg(c *gin.Context, code ErrorCode, msg string) {
 
 // OkResult 返回成功数据
 func Ok(c *gin.Context, data interface{}) {
-	c.JSON(http.StatusOK, ResultDto{
+	c.AbortWithStatusJSON(http.StatusOK, ResultDto{
 		Code: Success,
 		Msg:  errorsMap[Success],
 		Data: data,
@@ -58,7 +58,7 @@ func Ok(c *gin.Context, data interface{}) {
 
 // OkPagedResult 返回翻页数据
 func OkPaged(c *gin.Context, data interface{}, total int64) {
-	c.JSON(http.StatusOK, ResultDto{
+	c.AbortWithStatusJSON(http.StatusOK, ResultDto{
 		Code:  Success,
 		Msg:   errorsMap[Success],
 		Data:  data,
