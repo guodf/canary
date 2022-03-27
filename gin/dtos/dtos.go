@@ -8,11 +8,20 @@ import (
 
 type ErrorCode int
 
+type PagedDto struct {
+	Data  interface{} `json:"data"`
+	Total int64       `json:"total"`
+}
+type ResultPagedDto struct {
+	Code  ErrorCode `json:"code"`
+	Msg   string    `json:"msg,omitempty"`
+	Paged PagedDto  `json:"data,omitempty"`
+}
+
 type ResultDto struct {
-	Code  ErrorCode   `json:"code"`
-	Msg   string      `json:"msg,omitempty"`
-	Data  interface{} `json:"data,omitempty"`
-	Total int64       `json:"total,omitempty"`
+	Code ErrorCode   `json:"code"`
+	Msg  string      `json:"msg,omitempty"`
+	Data interface{} `json:"data,omitempty"`
 }
 
 const (
@@ -58,10 +67,12 @@ func Ok(c *gin.Context, data interface{}) {
 
 // OkPagedResult 返回翻页数据
 func OkPaged(c *gin.Context, data interface{}, total int64) {
-	c.AbortWithStatusJSON(http.StatusOK, ResultDto{
-		Code:  Success,
-		Msg:   errorsMap[Success],
-		Data:  data,
-		Total: total,
+	c.AbortWithStatusJSON(http.StatusOK, ResultPagedDto{
+		Code: Success,
+		Msg:  errorsMap[Success],
+		Paged: PagedDto{
+			Data:  data,
+			Total: total,
+		},
 	})
 }
