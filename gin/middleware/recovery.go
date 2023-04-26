@@ -3,7 +3,8 @@ package middleware
 import (
 	"net/http"
 
-	"e.coding.net/guodf/gopkg/goutil/gin/dtos"
+	"tango/gin/dtos"
+
 	"github.com/gin-gonic/gin"
 )
 

@@ -7,7 +7,7 @@ import (
 	"log"
 	"path/filepath"
 
-	"e.coding.net/guodf/gopkg/goutil/tuple"
+	"tango/tuple"
 )
 
 type FileType int

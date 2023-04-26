@@ -1,6 +1,6 @@
 package lru
 
-import "e.coding.net/guodf/gopkg/goutil/cache"
+import "tango/cache"
 
 type lruCache struct {
 	name  string

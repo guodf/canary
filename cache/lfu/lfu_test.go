@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"e.coding.net/guodf/gopkg/goutil/cache"
+	"tango/cache"
 )
 
 func Test_newLfuCache(t *testing.T) {

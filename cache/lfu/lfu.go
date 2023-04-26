@@ -4,7 +4,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"e.coding.net/guodf/gopkg/goutil/cache"
+	"tango/cache"
 )
 
 type lfuCache struct {

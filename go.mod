@@ -1,6 +1,6 @@
-module e.coding.net/guodf/gopkg/goutil
+module tango
 
-go 1.17
+go 1.19
 
 require (
 	github.com/gin-gonic/gin v1.7.7

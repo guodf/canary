@@ -3,7 +3,7 @@ package fifo
 import (
 	"sync"
 
-	"e.coding.net/guodf/gopkg/goutil/cache"
+	"tango/cache"
 )
 
 type fifoCache struct {

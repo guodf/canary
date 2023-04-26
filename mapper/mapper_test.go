@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"e.coding.net/guodf/gopkg/goutil/mapper"
+	"tango/mapper"
 )
 
 type SubDto struct {
