@@ -1,4 +1,4 @@
-module tango
+module github.com/guodf/canary
 
 go 1.19
 
