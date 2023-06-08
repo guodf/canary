@@ -7,7 +7,7 @@ import (
 	"log"
 	"path/filepath"
 
-	"tango/tuple"
+	tuple "github.com/guodf/canary/tuple"
 )
 
 type FileType int

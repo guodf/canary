@@ -4,7 +4,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"tango/cache"
+	cache "github.com/guodf/canary/cache"
 )
 
 type lfuCache struct {

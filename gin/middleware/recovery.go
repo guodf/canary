@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"tango/gin/dtos"
+	"github.com/guodf/canary/gin/dtos"
 
 	"github.com/gin-gonic/gin"
 )
