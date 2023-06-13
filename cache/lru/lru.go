@@ -1,6 +1,6 @@
 package lru
 
-import "tango/cache"
+import cache "github.com/guodf/canary/cache"
 
 type lruCache struct {
 	name  string

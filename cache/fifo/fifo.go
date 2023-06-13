@@ -3,7 +3,7 @@ package fifo
 import (
 	"sync"
 
-	"tango/cache"
+	"github.com/guodf/canary/cache"
 )
 
 type fifoCache struct {

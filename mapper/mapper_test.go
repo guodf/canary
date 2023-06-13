@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"tango/mapper"
+	mapper "github.com/guodf/canary/mapper"
 )
 
 type SubDto struct {

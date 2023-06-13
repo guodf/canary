@@ -2,9 +2,8 @@ package lfu
 
 import (
 	"reflect"
-	"testing"
-
 	"tango/cache"
+	"testing"
 )
 
 func Test_newLfuCache(t *testing.T) {
