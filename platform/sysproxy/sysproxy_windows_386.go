@@ -8,10 +8,10 @@ import (
 	"github.com/getlantern/byteexec"
 )
 
-//go:embed binaries/windows/sysproxy_386.exe
+//go:embed binaries/windows/sysproxy.exe
 var sysproxy []byte
 
-func ensureElevatedOnDarwin(be *byteexec.Exec, prompt string, iconFullPath string) (err error) {
+func ensureElevatedOnDarwin(be *byteexec.Exec) (err error) {
 	return nil
 }
 

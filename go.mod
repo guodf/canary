@@ -3,6 +3,8 @@ module github.com/guodf/canary
 go 1.19
 
 require (
+	github.com/getlantern/byteexec v0.0.0-20220903142956-e6ed20032cfd
+	github.com/getlantern/elevate v0.0.0-20220903142053-479ab992b264
 	github.com/getlantern/systray v1.2.2
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-toast/toast v0.0.0-20190211030409-01e6764cf0a4
@@ -19,6 +21,7 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/getlantern/context v0.0.0-20190109183933-c447772a6520 // indirect
 	github.com/getlantern/errors v1.0.1 // indirect
+	github.com/getlantern/filepersist v0.0.0-20210901195658-ed29a1cb0b7c // indirect
 	github.com/getlantern/golog v0.0.0-20211223150227-d4d95a44d873 // indirect
 	github.com/getlantern/hex v0.0.0-20190417191902-c6586a6fe0b7 // indirect
 	github.com/getlantern/hidden v0.0.0-20190325191715-f02dbb02be55 // indirect

@@ -2,8 +2,9 @@ package lfu
 
 import (
 	"reflect"
-	"tango/cache"
 	"testing"
+
+	cache "github.com/guodf/canary/cache"
 )
 
 func Test_newLfuCache(t *testing.T) {

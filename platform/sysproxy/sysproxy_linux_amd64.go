@@ -11,7 +11,7 @@ import (
 //go:embed binaries/linux_amd64/sysproxy
 var sysproxy []byte
 
-func ensureElevatedOnDarwin(be *byteexec.Exec, prompt string, iconFullPath string) (err error) {
+func ensureElevatedOnDarwin(be *byteexec.Exec) (err error) {
 	return nil
 }
 
