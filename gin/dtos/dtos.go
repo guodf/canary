@@ -8,6 +8,11 @@ import (
 
 type ErrorCode int
 
+type Paging struct {
+	PIndex int
+	PSize  int
+}
+
 type PagedDto struct {
 	Data  interface{} `json:"data"`
 	Total int64       `json:"total"`

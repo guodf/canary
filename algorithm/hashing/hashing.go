@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"mime/multipart"
+	"os"
 	"time"
 )
 
@@ -19,12 +20,27 @@ func MD5(str string) string {
 	return fmt.Sprintf("%x", bytes)
 }
 
+func MD5FromFile(path string) string {
+	f, err := os.Open(path)
+	if err != nil {
+		return ""
+	}
+	defer f.Close()
+
+	h := md5.New()
+	if _, err := io.Copy(h, f); err != nil {
+		return ""
+	}
+	bytes := h.Sum(nil)
+	return hex.EncodeToString(bytes)
+}
+
 func SHA1(file *multipart.FileHeader) (string, error) {
 	f, err := file.Open()
-	defer f.Close()
 	if err != nil {
 		return "", err
 	}
+	defer f.Close()
 
 	h := sha1.New()
 	if _, err := io.Copy(h, f); err != nil {
