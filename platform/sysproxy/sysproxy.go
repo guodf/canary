@@ -9,6 +9,22 @@ import (
 	"github.com/getlantern/byteexec"
 )
 
+type PacProxy struct {
+	Enabled bool
+	PacAddr string
+}
+type LocalProxy struct {
+	Enabled    bool
+	Server     string
+	BYPASSAddr string
+}
+
+type SysProxySetting struct {
+	EnableAutoProxy bool
+	PacProxy        PacProxy
+	LocalProxy      LocalProxy
+}
+
 var (
 	mu sync.Mutex
 	be *byteexec.Exec
