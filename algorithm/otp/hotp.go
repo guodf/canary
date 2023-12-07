@@ -9,10 +9,11 @@ import (
 )
 
 func NewHOTP(secret string, c uint64) OTP {
+	d := []byte(secret)
 	return &hOTP{
 		secret: secret,
 		c:      c,
-		hash:   hmac.New(sha1.New, []byte(secret)),
+		hash:   hmac.New(sha1.New, d),
 	}
 }
 
