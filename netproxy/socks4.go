@@ -6,7 +6,7 @@
 //			+----+----+----+----+----+----+----+----+----+----+....+----+
 // 长度		   1    1      2              4            可变           1
 // VN: 4
-// CD:
+// CMD:
 //		1:CONNECT
 //		2:BIND
 // DSTPORT: 端口
@@ -30,17 +30,18 @@
 //
 // DSTPORT: 端口
 // DSTIP:	ipv4
-package socks
+package netproxy
 
 import (
 	"bufio"
+	"encoding/binary"
 	"errors"
 	"io"
+	"net"
 )
 
 const (
-	VN4 = 0x04
-	VN5 = 0x05
+	Version4 = 0x04
 )
 
 // CMD 命令
@@ -60,8 +61,9 @@ type SocksV4 struct {
 
 var ErrorNoSocksV4 = errors.New("not socks v4")
 
-func NewSocksV4(bfr *bufio.Reader) (*SocksV4, error) {
-
+func NewSocksV4(conn net.Conn) *ProxyContext {
+	proxyContext := &ProxyContext{}
+	bfr := bufio.NewReader(conn)
 	socksV4 := &SocksV4{
 		VER:      4,
 		CMD:      0,
@@ -73,36 +75,36 @@ func NewSocksV4(bfr *bufio.Reader) (*SocksV4, error) {
 	cmd, e := bfr.ReadByte()
 	socksV4.CMD = cmd
 	if e != nil {
-		return nil, e
+		conn.Write(socksV4.failed())
+		return nil
 	}
 	b := make([]byte, 2)
 	length, e := bfr.Read(b)
 	if e != nil || length != 2 {
-		return nil, e
+		conn.Write(socksV4.failed())
+		return nil
 	}
 	copy(socksV4.Port[:], b)
-
+	proxyContext.Port = int(binary.BigEndian.Uint16(socksV4.Port[0:2]))
 	b = make([]byte, 4)
 	length, e = bfr.Read(b)
 	if e != nil || length != 4 {
-		return nil, e
+		conn.Write(socksV4.failed())
+		return nil
 	}
 	copy(socksV4.IP[:], b)
-
+	proxyContext.Host = net.IP(socksV4.IP[0:4]).String()
 	bs, e := bfr.ReadBytes(0)
-	if e == io.EOF {
+	if e == io.EOF || e == nil {
+		socksV4.UserData = bs
 		socksV4.End = 0
-		return socksV4, nil
+		return proxyContext
 	}
-	if e != nil {
-		return nil, e
-	}
-	socksV4.UserData = bs
-	socksV4.End = 0
-	return socksV4, nil
+	conn.Write(socksV4.failed())
+	return nil
 }
 
-func (socksV4 *SocksV4) Accept() []byte {
+func (socksV4 *SocksV4) accept() []byte {
 
 	var resp []byte
 	resp = append(resp, 0x00)
@@ -116,7 +118,7 @@ func (socksV4 *SocksV4) Accept() []byte {
 	return resp
 }
 
-func (socksV4 *SocksV4) Failed() []byte {
+func (socksV4 *SocksV4) failed() []byte {
 	var resp []byte
 	resp = append(resp, 0x00)
 	resp = append(resp, 0x5B)

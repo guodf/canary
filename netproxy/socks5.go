@@ -1,4 +1,4 @@
-package socks
+package netproxy
 
 import (
 	"bufio"
@@ -97,7 +97,7 @@ import (
 // DATA		 用户数据
 
 // 版本
-const Version = 0x05
+const Version5 = 0x05
 
 // 命令
 const (
@@ -148,19 +148,36 @@ type Socks5 struct {
 	port []byte
 }
 
-func NewSocks5(conn net.Conn) Socks5 {
-	return Socks5{conn: conn, bfr: bufio.NewReader(conn)}
+func NewSocks5(conn net.Conn) *ProxyContext {
+	proxyContext := &ProxyContext{}
+	socks5 := Socks5{conn: conn, bfr: bufio.NewReader(conn)}
+	socks5.replyAsk(REP_0)
+	if !socks5.validConn() {
+		return nil
+	}
+	addr, _ := socks5.getAddr()
+	tarConn, err := net.Dial("tcp", addr)
+	if err != nil {
+		socks5.replyConn(REP_4)
+		return nil
+	}
+	defer tarConn.Close()
+	err = socks5.replyConn(REP_0)
+	if err != nil {
+		return nil
+	}
+	return proxyContext
 }
 
 func (socks *Socks5) Valid() bool {
 	firstByte, e := socks.bfr.ReadByte()
-	if e == nil && firstByte == Version {
+	if e == nil && firstByte == Version5 {
 		return true
 	}
 	return false
 }
 
-func (socks *Socks5) GetAddr() (string, error) {
+func (socks *Socks5) getAddr() (string, error) {
 	firstByte, e := socks.bfr.ReadByte()
 	if e != nil {
 		return "", e
@@ -201,16 +218,16 @@ func (socks *Socks5) GetMethods() ([]byte, error) {
 	return nil, e
 }
 
-func (socks *Socks5) ReplyAsk(method byte) {
+func (socks *Socks5) replyAsk(method byte) {
 	length, e := socks.conn.Write([]byte{
-		Version,
+		Version5,
 		method,
 	})
 	log.Println(e)
 	log.Println(length)
 }
 
-func (socks *Socks5) ValidConn() bool {
+func (socks *Socks5) validConn() bool {
 	if socks.Valid() {
 		firstByte, e := socks.bfr.ReadByte()
 		if e == nil {
@@ -224,9 +241,9 @@ func (socks *Socks5) ValidConn() bool {
 	return false
 }
 
-func (socks *Socks5) ReplyConn(rep int) error {
+func (socks *Socks5) replyConn(rep int) error {
 	repl := []byte{
-		Version,
+		Version5,
 		byte(rep),
 		RSV,
 		socks.atyp,
@@ -239,12 +256,6 @@ func (socks *Socks5) ReplyConn(rep int) error {
 	_, e := socks.conn.Write(repl)
 	return e
 }
-
-func (socks *Socks5) Exchange(rc net.Conn) {
-	go io.Copy(rc, socks.bfr)
-	io.Copy(socks.conn, rc)
-}
-
 func (socks *Socks5) SetAddr(bytes []byte) {
 	socks.addr = bytes
 }
@@ -255,7 +266,7 @@ func (socks *Socks5) SetPort(bytes []byte) {
 
 func (socks *Socks5) Ask() bool {
 	ask := []byte{
-		Version,
+		Version5,
 		1,
 		0,
 	}
@@ -272,12 +283,12 @@ func (socks *Socks5) validReplyAsk() bool {
 		return false
 	}
 	socks.bfr.ReadByte()
-	return b == Version
+	return b == Version5
 }
 
 func (socks *Socks5) Conn(cmd int) bool {
 	req := []byte{
-		Version,
+		Version5,
 		byte(cmd),
 		RSV,
 		socks.atyp,
